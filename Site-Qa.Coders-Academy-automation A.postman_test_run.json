@@ -1,0 +1,354 @@
+{
+	"id": "eb7f0821-7f8e-4f91-acf6-6a388661b15f",
+	"name": "Hackathon",
+	"timestamp": "2023-09-08T15:08:42.335Z",
+	"collection_id": "24090430-54f5a446-588a-4b59-a0a6-a1b36c7020d9",
+	"folder_id": 0,
+	"environment_id": "24090430-4f0d2ae5-45a8-479c-8e21-54d19880d001",
+	"totalPass": 21,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2023-09-08T15:08:38.908Z",
+	"totalFail": 1,
+	"results": [
+		{
+			"id": "7c30d773-e95e-4113-8bff-3bc25d20414d",
+			"name": "Login SYS",
+			"url": "https://develop.qacoders-academy.com.br/api/login",
+			"time": 166,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				166
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "2ea4385e-7c93-410c-a130-613206f28a22",
+			"name": "Login Register",
+			"url": "https://develop.qacoders-academy.com.br/api/user/register?token=AUTH_VALUE",
+			"time": 36,
+			"responseCode": {
+				"code": 409,
+				"name": "Conflict"
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				36
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			]
+		},
+		{
+			"id": "dae77a32-1f36-4fe5-b6ec-51d0e39efe16",
+			"name": "Login",
+			"url": "https://develop.qacoders-academy.com.br/api/login",
+			"time": 131,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				131
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "cbd15440-8c92-4bd1-9e8b-7fc704c2f51d",
+			"name": "Create-Supplier",
+			"url": "https://develop.qacoders-academy.com.br/api/suppliers?token=AUTH_VALUE",
+			"time": 76,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"check cadastro com sucesso is true": true,
+				"Status code is 201": true,
+				"check CorporateName is true": true,
+				"Check is FullName is True": true,
+				"Check is Mail is True": true,
+				"Check is IDCorporate is True": true,
+				"Check is ServiceDescription is True": true,
+				"Check is Phone is True": true,
+				"Check is Country is True": true,
+				"Check is ZipCode is True": true,
+				"Check is City is True": true,
+				"Check is Uf is True": true,
+				"Check is District is True": true,
+				"Check is Street is True": true,
+				"Check is AddressNumber is True": true
+			},
+			"testPassFailCounts": {
+				"check cadastro com sucesso is true": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"check CorporateName is true": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check is FullName is True": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check is Mail is True": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check is IDCorporate is True": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check is ServiceDescription is True": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check is Phone is True": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check is Country is True": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check is ZipCode is True": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check is City is True": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check is Uf is True": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check is District is True": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check is Street is True": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check is AddressNumber is True": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				76
+			],
+			"allTests": [
+				{
+					"check cadastro com sucesso is true": true,
+					"Status code is 201": true,
+					"check CorporateName is true": true,
+					"Check is FullName is True": true,
+					"Check is Mail is True": true,
+					"Check is IDCorporate is True": true,
+					"Check is ServiceDescription is True": true,
+					"Check is Phone is True": true,
+					"Check is Country is True": true,
+					"Check is ZipCode is True": true,
+					"Check is City is True": true,
+					"Check is Uf is True": true,
+					"Check is District is True": true,
+					"Check is Street is True": true,
+					"Check is AddressNumber is True": true
+				}
+			]
+		},
+		{
+			"id": "42c1437b-45f5-45a7-8c4e-086b40c75b20",
+			"name": "Supplier empty",
+			"url": "https://develop.qacoders-academy.com.br/api/suppliers",
+			"time": 33,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				33
+			],
+			"allTests": [
+				{
+					"Status code is 400": true
+				}
+			]
+		},
+		{
+			"id": "c7bf4134-388b-427b-9700-b61b725a2de5",
+			"name": "Show-Supplier",
+			"url": "https://develop.qacoders-academy.com.br/api/suppliers?token=AUTH_VALUE",
+			"time": 971,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				971
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "8907d885-dfee-4692-ac78-13a93b7b8f5d",
+			"name": "Index-Supplier",
+			"url": "https://develop.qacoders-academy.com.br/api/suppliers/64fbaae61acfc7838b3f3121?token=AUTH_VALUE",
+			"time": 37,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				37
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "4ab9d02a-1c21-4262-aac3-8e6f8e77ed78",
+			"name": "Count-Supplier",
+			"url": "https://develop.qacoders-academy.com.br/api/suppliers/count?token=AUTH_VALUE",
+			"time": 37,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				37
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 1487,
+	"collection": {
+		"requests": [
+			{
+				"id": "7c30d773-e95e-4113-8bff-3bc25d20414d",
+				"method": "POST"
+			},
+			{
+				"id": "2ea4385e-7c93-410c-a130-613206f28a22",
+				"method": "POST"
+			},
+			{
+				"id": "dae77a32-1f36-4fe5-b6ec-51d0e39efe16",
+				"method": "POST"
+			},
+			{
+				"id": "cbd15440-8c92-4bd1-9e8b-7fc704c2f51d",
+				"method": "POST"
+			},
+			{
+				"id": "42c1437b-45f5-45a7-8c4e-086b40c75b20",
+				"method": "POST"
+			},
+			{
+				"id": "c7bf4134-388b-427b-9700-b61b725a2de5",
+				"method": "GET"
+			},
+			{
+				"id": "8907d885-dfee-4692-ac78-13a93b7b8f5d",
+				"method": "GET"
+			},
+			{
+				"id": "4ab9d02a-1c21-4262-aac3-8e6f8e77ed78",
+				"method": "GET"
+			}
+		]
+	}
+}
