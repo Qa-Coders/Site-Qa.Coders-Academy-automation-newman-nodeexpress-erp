@@ -1,354 +1,853 @@
 {
-	"id": "eb7f0821-7f8e-4f91-acf6-6a388661b15f",
-	"name": "Hackathon",
-	"timestamp": "2023-09-08T15:08:42.335Z",
-	"collection_id": "24090430-54f5a446-588a-4b59-a0a6-a1b36c7020d9",
-	"folder_id": 0,
-	"environment_id": "24090430-4f0d2ae5-45a8-479c-8e21-54d19880d001",
-	"totalPass": 21,
-	"delay": 0,
-	"persist": true,
-	"status": "finished",
-	"startedAt": "2023-09-08T15:08:38.908Z",
-	"totalFail": 1,
-	"results": [
+	"info": {
+		"_postman_id": "54f5a446-588a-4b59-a0a6-a1b36c7020d9",
+		"name": "Hackathon",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24090430",
+		"_collection_link": "https://crimson-astronaut-119803.postman.co/workspace/Academy-T8~25e9cc01-be6b-448e-97bb-5209312f44ab/collection/24090430-54f5a446-588a-4b59-a0a6-a1b36c7020d9?action=share&source=collection_link&creator=24090430"
+	},
+	"item": [
 		{
-			"id": "7c30d773-e95e-4113-8bff-3bc25d20414d",
-			"name": "Login SYS",
-			"url": "https://develop.qacoders-academy.com.br/api/login",
-			"time": 166,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Status code is 200": true
-			},
-			"testPassFailCounts": {
-				"Status code is 200": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				166
-			],
-			"allTests": [
+			"name": "Auth",
+			"item": [
 				{
-					"Status code is 200": true
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var responseJson = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var tokenLogin = responseJson.token;\r",
+									"pm.environment.set(\"token\", tokenLogin);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token_sysadmin}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mail\": \"qacoders_squadacademy1@academy.com\",\r\n    \"password\": \"QaCoders@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
 		{
-			"id": "2ea4385e-7c93-410c-a130-613206f28a22",
-			"name": "Login Register",
-			"url": "https://develop.qacoders-academy.com.br/api/user/register?token=AUTH_VALUE",
-			"time": 36,
-			"responseCode": {
-				"code": 409,
-				"name": "Conflict"
-			},
-			"tests": {
-				"Status code is 200": false
-			},
-			"testPassFailCounts": {
-				"Status code is 200": {
-					"pass": 0,
-					"fail": 1
-				}
-			},
-			"times": [
-				36
-			],
-			"allTests": [
+			"name": "Supplier",
+			"item": [
 				{
-					"Status code is 200": false
-				}
-			]
-		},
-		{
-			"id": "dae77a32-1f36-4fe5-b6ec-51d0e39efe16",
-			"name": "Login",
-			"url": "https://develop.qacoders-academy.com.br/api/login",
-			"time": 131,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Status code is 200": true
-			},
-			"testPassFailCounts": {
-				"Status code is 200": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				131
-			],
-			"allTests": [
+					"name": "Create-Supplier",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('idSupplier', pm.variables.replaceIn(pm.response.json().newSupplier._id));\r",
+									"\r",
+									"pm.test(\"check cadastro com sucesso is true\", function () {\r",
+									"    pm.expect(pm.variables.get(\"MsgOk\")).to.eql(pm.response.json().msg);\r",
+									"});\r",
+									"\r",
+									"pm.test('Status code is 201', function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"check CorporateName is true\", function () {\r",
+									"    pm.expect(pm.variables.get(\"CorporateName\")).to.eql(pm.response.json().newSupplier.corporateName);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check is FullName is True\", function () {\r",
+									"    pm.expect(pm.variables.get(\"FullName\")).to.eql(pm.response.json().newSupplier.responsibleContact);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check is Mail is True\", function () {\r",
+									"    pm.expect(pm.variables.get(\"Mail\")).to.eql(pm.response.json().newSupplier.mail);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check is IDCorporate is True\", function () {\r",
+									"    pm.expect(pm.variables.get(\"IDCorporate\")).to.eql(pm.response.json().newSupplier.cnpj);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check is ServiceDescription is True\", function () {\r",
+									"    pm.expect(pm.variables.get(\"ServiceDescription\")).to.eql(pm.response.json().newSupplier.serviceDescription);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check is Phone is True\", function () {\r",
+									"    pm.expect(pm.variables.get(\"Phone\")).to.eql(pm.response.json().newSupplier.telephone);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check is Country is True\", function () {\r",
+									"    pm.expect(pm.variables.get(\"Country\")).to.eql(pm.response.json().newSupplier.address[0].country);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check is ZipCode is True\", function () {\r",
+									"    pm.expect(pm.variables.get(\"ZipCode\")).to.eql(pm.response.json().newSupplier.address[0].zipCode);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check is City is True\", function () {\r",
+									"    pm.expect(pm.variables.get(\"City\")).to.eql(pm.response.json().newSupplier.address[0].city);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check is Uf is True\", function () {\r",
+									"    pm.expect(pm.variables.get(\"Uf\")).to.eql(pm.response.json().newSupplier.address[0].state);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check is District is True\", function () {\r",
+									"    pm.expect(pm.variables.get(\"District\")).to.eql(pm.response.json().newSupplier.address[0].district);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check is Street is True\", function () {\r",
+									"    pm.expect(pm.variables.get(\"Street\")).to.eql(pm.response.json().newSupplier.address[0].street);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check is AddressNumber is True\", function () {\r",
+									"    pm.expect(pm.variables.get(\"AddressNumber\")).to.eql(parseInt (pm.response.json().newSupplier.address[0].number));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function corporateName() {\r",
+									"\r",
+									"    var corporateName = [\"Onda Cerebral Máxima\",\"Criativo Sparx Brilhante\",\"Design Criativo\",\"ZenithWorks\",\"SevenBlue\", \"BlueiNova\",\"Byte & Construtores\",\"Rocket brasil\",\"Think\", \"Ignite Vendas\",\"Master\",\"Criare Inovation\",\"CodeVerse\", \"TechNova\",\"NexaByte\",\"NexusTech\",\"SkyTech\",\"BlueWave Tech\", \"QuantumShift\",\"TechIgnite\",\"TechnoForge\",\"DynaTech\", \"ProximTech\",\"CoreVortex\",\"IdeiaLab\",\"StartupLab\", \"EmpreendaJá\",\"Incore Startup\",\"VisionLab\",\"InovaLab\", \"Criative e Lab\",\"Growth Action\",\"TechLab Sim\",\"NegócioLab\", \"Solução Prod Lab\",\"EmpreendedorLab\",\"Eight FuturoLab\", \"FintecLab\",\"Forge Fintec\",\"InvestTop\",\"Right Digital Finanças\",\"Tech Invest\",\"Invest Fintec Premium\",\"Blitz Fintec\",\"Finantec 180\",\"Invest Seguro Fintec\",\"Fintec Digital Wealth\",\"Barão Money Brasil\",\"Lobo Fintec\"];\r",
+									"     \r",
+									"    var randomItem = corporateName[Math.floor(Math.random() * corporateName.length)];\r",
+									"    \r",
+									"    return randomItem; \r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"CorporateName\", corporateName());\r",
+									"// pm.environment.set(\"CorporateName\", pm.variables.replaceIn('{{$randomCorporateName}}'));\r",
+									"\r",
+									"function firstName() {\r",
+									"\r",
+									"        var firstName = [\"Miguel\",\"Sophia\",\"Davi\",\"Alice\",\"Arthur\",\"Julia\",\"Pedro\",\"Isabella\",\"Gabriel\",\"Manuela\",\"Bernardo\",\"Laura\",\"Lucas\",\"Flávia\",\"Luiza\",\"Matheus\",\"Noah\", \"Valentina\",\"Rafael\",\"Giovanna\",\"Heitor\",\"Enzo\",\"Helena\",\"Guilherme\",\"Beatriz\",\"Nicolas\",\"Leticia\",\"Lorenzo\",\"Lara\",\"Gustavo\",\"Mariana\",\"Felipe\",\"Nicole\",\"Samuel\",\"Joice\", \"Dener\",\"Rafaela\",\"Augusto\",\"Heloísa\",\"Daniel\",\"Isadora\",\"Vitor\",\"Lívia\",\"Leonardo\",\"Henrique\",\"Juliana\",\"Theo\",\"Lorena\",\"Murilo\",\"Gabriela\",\"Eduardo\",\"Yasmin\",\"Pedro\", \"Henriqueta\",\"Isabelly\",\"Pietro\",\"Sarah\",\"Kauã\",\"Jaqueline\",\"Isaac\",\"Letícia\",\"Caio\",\"Mariele\",\"Vinicius\",\"Melissa\",\"Benjamin\",\"Marina\",\"João\",\"Clara\",\"Lucca\",\"Cecília\",\"Miguel\",\"Esther\",\"Bryan\",\"Emanuelly\",\"Joaquim\",\"Rebeca\",\"Victor\",\"Bella\",\"Thiago\",\"Lavínia\",\"Antônio\",\"Vitória\",\"Mario\",\"Bianca\",\"Francisco\",\"Catarina\",\"Ronaldo\",\"Larissa\",\"Bruno\",\"Margarida\",\"Emanuel\",\"Fernanda\",\"Marcos\",\"Amanda\",\"Ian\",\"Alícia\",\"Luiz\",\"Carolina\",\"Rodrigo\",\"Agatha\",\"Otávio\",\"Gabrielly\"];\r",
+									"\r",
+									"        var randomItem = firstName[Math.floor(Math.random() * firstName.length)];\r",
+									"    \r",
+									"    return randomItem; \r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"FirstName\", firstName());\r",
+									"\r",
+									"function lastName() {\r",
+									"\r",
+									"    var lastName = [\"Alves da Silva\", \"Andrade Barbosa\", \"Barbosa Oliveira\", \"Oliveira da Silva\", \"Alves Pereira\", \"Conceição Barbosa\", \"Allen Young\", \"Hernandez King\", \"Wright Lopez\", \"Hill Scott\", \"Green Adams\", \"Conceição da Costa\", \"da Costa Oliveira\", \"Rodrigues de Oliveira\", \"Amaral Neto de Souza\", \"Pereira da Conceição\", \"Barros Neto de Andrade\", \"Borges de Andrade Pereira da Silva\", \"Batista Campos do Amaral\", \"Cardoso de Oliveira\", \"Pontes Guimarães\", \"Dias de Jesus\", \"Barbos de Lima\", \"Gonçalves da Silva\", \"Gonsalves de Lima\", \"Pereira de Oliveira Batista\", \"Dias de Freitas\", \"Ferreira\", \"Garcia da Paixão\", \"Lima Lopes\", \"Jesus da Silva\", \"da Silva de Lima\", \"da Silva Gonsalves Texeira\", \"Fernandes de Paula\", \"de Paula da Silva\", \"Barbosa de Mello Oliveira\", \"Oliveira Neto Conceição da Paixão\"];\r",
+									"\r",
+									"    var randomItem = lastName[Math.floor(Math.random() * lastName.length)];\r",
+									"    \r",
+									"    return randomItem; \r",
+									"}\r",
+									"    \r",
+									"pm.environment.set(\"LastName\", lastName());\r",
+									"\r",
+									"pm.environment.set(\"FullName\", pm.variables.get(\"FirstName\") + \" \" + pm.variables.get(\"LastName\"));\r",
+									"\r",
+									"function emailProvider() {\r",
+									"\r",
+									"    var emailProvider = [\"@hotmail.com\", \"@gmail.com\", \"@gmail.com.br\", \"@yahoo.com.br\", \"@terra.com.br\", \"@outlook.com\", \"@live.com\", \"@icloud.com\"];\r",
+									"\r",
+									"    var randomItem = emailProvider[Math.floor(Math.random() * emailProvider.length)];\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"EmailProvider\", emailProvider());\r",
+									"\r",
+									"pm.environment.set(\"Mail\", pm.variables.replaceIn('{{$guid}}') + \"_empresafake\" + pm.environment.get(\"EmailProvider\"));\r",
+									"\r",
+									"pm.environment.set(\"'\"+\"AddressNumber\"+\"'\", Math.floor(Math.random() * 10000));\r",
+									"\r",
+									"\r",
+									"function generateRandomCNPJ() {\r",
+									"    var n = 9; // 9 primeiros dígitos\r",
+									"    var n1 = getRandomInt(0, n);\r",
+									"    var n2 = getRandomInt(0, n);\r",
+									"    var n3 = getRandomInt(0, n);\r",
+									"    var n4 = getRandomInt(0, n);\r",
+									"    var n5 = getRandomInt(0, n);\r",
+									"    var n6 = getRandomInt(0, n);\r",
+									"    var n7 = getRandomInt(0, n);\r",
+									"    var n8 = getRandomInt(0, n);\r",
+									"    var n9 = 0; // O nono dígito é sempre 0\r",
+									"    var n10 = 0; // O décimo dígito é sempre 0\r",
+									"    var n11 = getRandomInt(0, n);\r",
+									"    var n12 = getRandomInt(0, n);\r",
+									"\r",
+									"    var d1 = n12 * 2 + n11 * 3 + n9 * 4 + n8 * 5 + n7 * 6 + n6 * 7 + n5 * 8 + n4 * 9 + n3 * 2 + n2 * 3 + n1 * 4;\r",
+									"    d1 = 11 - (d1 % 11);\r",
+									"    d1 = d1 >= 10 ? 0 : d1;\r",
+									"\r",
+									"    var d2 = d1 * 2 + n12 * 3 + n11 * 4 + n9 * 5 + n8 * 6 + n7 * 7 + n6 * 8 + n5 * 9 + n4 * 2 + n3 * 3 + n2 * 4 + n1 * 5;\r",
+									"    d2 = 11 - (d2 % 11);\r",
+									"    d2 = d2 >= 10 ? 0 : d2;\r",
+									"\r",
+									"    return `${n1}${n2}${n3}${n4}${n5}${n6}${n7}${n8}${n9}${n10}${n11}${n12}${d1}${d2}`;\r",
+									"}\r",
+									"\r",
+									"function getRandomInt(min, max) {\r",
+									"    return Math.floor(Math.random() * (max - min + 1)) + min;\r",
+									"}\r",
+									" \r",
+									"pm.environment.set(\"IDCorporate\",generateRandomCNPJ());\r",
+									"\r",
+									"\r",
+									"function serviceDescription() {\r",
+									"\r",
+									"    var serviceDescription = [\"Assessoria Contabil\",\"Analise Financeira\",\"Controle de Custos\",\"Gestão Folha de Pagamento\",\"Planejamento Tributario\",\"Suporte Tecnico\",\"Alguel de Maquinas\",\"Configuração de Redes\",\"Instalação de Software\",\"Informatica Basico\"];\r",
+									"\r",
+									"    var randomItem = serviceDescription[Math.floor(Math.random() * serviceDescription.length)];\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"ServiceDescription\",serviceDescription());\r",
+									"\r",
+									"\r",
+									"function phonenumber() {\r",
+									"\r",
+									"    var phonenumber = [981718551,986598149,999620167,981861718,973714954,994891686,994784952,971625825,985140652,987413824,987781142,984188003,999821321,993430652,993045548,967274357,992232553,974150681,996339359,998635153,995849584,983842883,982269573,967526971,968115645,986324175,980385840,991288109,976384812,997351513,982583888,980369422,993503986,971677223,987517526,932463287,982667642,983469266,983834520,928307244,934350014,925534867,937577682,939785785,982689768,982867532,929103677,993691882,938735351,982281327,998258412,987741123,998616841,969589739,979067875,982184334,976394096,991234321,998258412, 987741123, 998616841, 969589739, 979067875, 982184334, 976394096, 991234321, 981257546, 982632630, 992626653, 988358123, 995675745, 991087267, 996552241, 973458395, 993529733, 981657207, 980550207, 997571464, 987028232, 969557496, 985128115, 995283334, 996327279, 986204821, 995313152, 980632187, 993661853, 974338237, 985117245, 992213414, 996784882, 988157645, 976869654, 997752956, 987536854, 972447079, 974956642, 969822121, 967707683, 971781421, 997361833, 983332805, 979558299, 980555328, 979312516, 992168724, 994301288, 967775760];\r",
+									"\r",
+									"    var randomItem = phonenumber[Math.floor(Math.random() * phonenumber.length)];\r",
+									"\r",
+									"    return randomItem\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"AreaCode\", Math.floor(Math.random() * 99)+10);\r",
+									"\r",
+									"pm.environment.set(\"Phone\",\"55\"+ pm.environment.get(\"AreaCode\") + '' + phonenumber());\r",
+									"\r",
+									"\r",
+									"function emailProvider() {\r",
+									"\r",
+									"    var emailProvider = [\"@hotmail.com\", \"@gmail.com\", \"@gmail.com.br\", \"@yahoo.com.br\", \"@terra.com.br\", \"@outlook.com\", \"@live.com\", \"@icloud.com\"];\r",
+									"\r",
+									"    var randomItem = emailProvider[Math.floor(Math.random() * emailProvider.length)];\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"Mail\", emailProvider());  \r",
+									"\r",
+									"pm.environment.set(\"Mail\", pm.variables.replaceIn('{{$guid}}') + \"_empresafake\" + pm.environment.get(\"EmailProvider\"));\r",
+									"\r",
+									"function zipCode() {\r",
+									"\r",
+									"    var zipCode = [\"02077045\",\"13458580\",\"03015017\",\"05892387\",\"08452252\",\"04877265\",\"08320685\",\"04182125\",\"02987265\",\"08240174\",\"04405185\",\"88058115\",\"88020230\",\"88020231\",\"88090561\",\"88066405\",\"88058256\",\"88040445\",\"88048418\",\"88066420\",\"88066407\",\"52031216\",\"50920825\",\"50810065\",\"52090168\",\"52160231\",\"52121032\",\"50790140\",\"51310540\",\"52190480\",\"50610631\",\"41321205\",\"41320210\",\"41321240\",\"41321830\",\"41321835\",\"41321841\",\"41231085\",\"41342565\",\"41205560\",\"41370075\",\"23545037\",\"23548007\",\"23595180\",\"23580420\",\"23555240\",\"23587545\",\"23548013\",\"23555306\",\"23580430\",\"23548163\",\"30672772\",\"31744620\",\"30666482\",\"30640438\",\"30668176\",\"31846022\",\"31540083\",\"30518321\",\"30451535\",\"31741051\",\"69036662\",\"69036664\",\"69030418\",\"69036666\",\"69015754\",\"69075763\",\"69053770\",\"69008410\",\"69020083\",\"69065016\",\"74959198\",\"74988833\",\"74786610\",\"74786640\",\"74786612\",\"74786642\",\"74786614\",\"74786644\",\"74786616\",\"74786646\",\"64090451\",\"64018375\",\"64013450\",\"64023110\",\"64033512\",\"64039650\",\"64033588\",\"64013451\",\"64018380\",\"64090452\",\"29033302\",\"29047058\",\"29024043\",\"29033350\",\"29032785\",\"29032030\",\"29024040\",\"29023047\",\"29033395\",\"29024060\"];\r",
+									"\r",
+									"    var randomItem = zipCode[Math.floor(Math.random() * zipCode.length)];\r",
+									"    \r",
+									"    return randomItem; \r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"ZipCode\", zipCode());\r",
+									"\r",
+									"function city() {    \r",
+									"     \r",
+									"     var city = [\"São Paulo\", \"Belo Horizonte\",\"Assaí\",\"Londrina\",\"Rio de Janeiro\",\"Sobral\",\"Jataí\",\"Gramado\",\"Campo Grande\",\"Rio Grande\",\"São Mateus\", \"Jundiaí\",\"Curitiba\",\"Suvitiba\",\"Nova Iguaçu\",\"Votorantim\",\"Araguaia\",\"Itaboraí\",\"Araras\", \"Abadia de Goiás\",\"Amorinópolis\",\"Águas Lindas de Goiás\",\"Calixtolândia\",\"Goianésia\",\"Caucaia\",\"Tabuba\",\"Juazeiro do Norte\", \"Travessa Mauá\",\"Manaus\",\"Novo Hamburgo\", \"Canoas\",\"Porto Alegre\",\"Uruguaiana\",\"Brasília\",\"Santa Cruz do Sul\",\"Franca\",\"Caraguatatuba\",\"Ponte Nova\",\"Araçatuba\",\"Santa Maria\",\"Campos dos Goytacazes\", \"Anápolis\",\"Paraíso de Goiás\",\"Itaipu\", \"Maricá\",\"Petrópolis\",\"São Luís\",\"Rolândia\", \"Cuiabá\",\"Maringá\",\"Salvador\",\"São Bernardo\",\"Praia Grande\",\"Americana\",\"Betim\", \"Magé\", \"Itaquaquecetuba\",\"Adrianópolis\",\"Fortaleza\",\"Iguatu\",\"Itapecerica da Serra\",\"Campinas\",\"Tefé\",\"São Gonçalo\",\"Barra Mansa\",\"Anhangüera\",\"Imperatriz\",\"Sinop\",\"Cascavel\",\"Juazeiro\",\"Coroadinho\",\"Bonfim\",\"Itabuna\",\"Foz do Iguaçu\",\"Novo Horizonte\",\"Juiz de Fora\",\"Barreiras\",\"Goiânia\",\"Camaçari\",\"Alto da Cruz\",\"Sete Lagoas\",\"Itambé\",\"Matão\",\"Juazeiro\",\"Jerusalém\",\"Araçatiba\",\"Recife\"];\r",
+									"\r",
+									"    var randomItem = city [Math.floor(Math.random() * city.length)];        return randomItem; } \r",
+									"\r",
+									"pm.environment.set(\"City\",city());\r",
+									"\r",
+									"function state() {    var state = [\"RR\",\"AC\",\"AM\",\"RO\",\"PA\",\"AP\",\"TO\",\"MA\",\"PI\",\"CE\",\"RN\",\"PB\",\"PE\",\"AL\",\"SE\",\"BA\",\"MG\",\"ES\",\"RJ\",\"SP\",\"PR\",\"SC\",\"RS\",\"MS\",\"MT\",\"GO\",\"DF\"];\r",
+									"\r",
+									"    var randomItem = state[Math.floor(Math.random() * state.length)];        return randomItem; } \r",
+									"\r",
+									"pm.environment.set(\"Uf\",state());\r",
+									"\r",
+									"function neighbourhood() {    var neighbourhood = [\"República\",\"Boa Viagem\",\"Cidade São Mateus\",\"Vila Gomes Cardim\",\"Cidade São Mateus\",\"Warta\",\"Centro\",\"Vila Jardim Rio Claro\",\"Zona Portuária\",\"Guriri Norte\",\"São Mateus\",\"Forte Rio Branco\",\"Lá Imprensa\",\"São João\",\"Vila Joana\",\"Carlos Augusto Cornelsen\",\"Bom Retiro\",\"Ponta Negra\",\"Suritiba Mendes\",\"Setor Sul\",\"Jardim América V\",\"América\",\"Jardim Alterosa\",\"Mansões Village\",\"Itamaraty\",\"4ª Etapa\",\"De Godoy\",\"Belchior\",\"Vila Jorge\",\"Setor Santa Bárbara\",\"Mansões Samurai\",\"Avenida Goiás 123\",\"Lindas de Goiás\",\"Mundo\",\"Interlagos\",\"Antônio Guerra\",\"Vila Pavão 21\",\"Cristiano sá Olsen\",\"Areal\",\"Setor de Habitações\",\"Individuais Norte\",\"Sobradinho\",\"Brasília\",\"Asa Sul\",\"Setor IV\",\"Goiânia 2\",\"Alípio Mendes\",\"Santa Maria\", \"Setor Gerais\",\"Samurai\",\"Dezenove\",\"José Antônio\",\"Guerra Peixe\",\"Guará\",\"Alto da Serra\",\"Itaipu 12\",\"Parque da Barragem\", \"Área Especial D\",\"São Jorge\",\"Aragua\", \"Anhanguera A\",\"Água Clara\",\"Vila Goiás\", \"Gomes de Paula\",\"Macabeus 586\",\"Vila São Jorge\",\"Chácaras Ana Maria\",\"Jardim Sumaré\", \"Duque\",\"Projetada J\",\"Araçatuba\",\"Candangolândia\",\"Brasílinha\",\"QE 11\",\"Especial C\",\"Alípio Texeira\",\"Gama Oeste\", \"Truman\",\"Sobradinho2\",\"Novo Mundo III\", \"Linda Da Vitória\",\"Águas de Goiás\",\"Monte Castelo\",\"José Gomes\",\"D. Paula\"\r",
+									"];\r",
+									"\r",
+									"    var randomItem = neighbourhood[Math.floor(Math.random() * neighbourhood.length)];  \r",
+									"\r",
+									"      return randomItem; } \r",
+									"\r",
+									"pm.environment.set(\"District\",neighbourhood());\r",
+									"\r",
+									"function street() {   \r",
+									"    \r",
+									"     var street = [\"Praça da República\",\"Avenida Afonso Pena\",\"Maria Luísa do Val Penteado\",\"Serra de Bragança\",\"Avenida Rio Branco\",\"Vila Joana 12\",\"JCA 29\",\"SCRN 702/703 Bloco H\",\"Guará II\",\"Domingos Olímpio\",\"Avenida Tocantins\",\"Da Imprensa\",\"Almirante Maximiano Fonseca\",\"Centro\",\"Monte Castelo\",\"Nova Cruz\",\"Avenida Esbertalina Barbosa Damiani\",\"Guriri Norte\",\"São Mateus\",\"Pontes Suvitiba\",\"Barragem Setor 12\",\"Carlos Augusto Cornelsen\",\"Bom Retiro\",\"QS 5 Rua 300\",\"Asa Norte\",\"Comércio Local 13\",\"Vila Pavão 3\",\"Cristiano Olsen\",\"Jardim Sumaré\",\"QE 11 Área Especial C\",\"Águas Lindas\",\"Quadra 1 Lote 9\",\"Setor Bárbara\",\"Rua 31 404\",\"Jardim Caravelas\",\"Avenida Goiás 238\",\"Júpiter\",\"Rua SR 42\",\"Águas Claras\",\" Novo Mundo Truman\",\"SHIN QI 3 Conjunto 1\",\"Areal 02\",\"Guará I\",\"QR 307 Conjunto V\",\"Quadra SQS 413 Bloco P\",\"RI 40\",\"QR 1-A Conjunto C\",\"Brasília Leste\",\"CL 310 Bloco C\",\"Itamaraty\",\"Setor Recanto\",\"Área Especial C\",\"Santos Dumont\",\"Macabeus\",\"Recanto das Minas\",\"Vila Goiás 5\",\"Das Araras 12\",\"Jardim Bumaré\",\"QE 11\",\"Paraíso de Goiás 3\",\"de Godoy 281\",\"4ª Etapa\",\"Boa Vitória\",\"Rua Cristiano de Olsen 1\"];\r",
+									"\r",
+									"    var randomItem = street[Math.floor(Math.random() * street.length)];        return randomItem; } \r",
+									"\r",
+									"pm.environment.set(\"Street\",street());\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"AddressNumber\", Math.floor(Math.random() * 10000));\r",
+									"\r",
+									"let numerosTelefone = [];\r",
+									"pm.environment.get(\"variable_key\");\r",
+									"pm.environment.get(\"variable_key\");\r",
+									"pm.environment.get(\"variable_key\");\r",
+									"pm.environment.get(\"variable_key\");\r",
+									"\r",
+									"function gerarNumero() {\r",
+									"  let numero = Math.floor(Math.random() * 9999999999);\r",
+									"  if (!numerosTelefone.includes(numero)) {\r",
+									"    numerosTelefone.push(numero);\r",
+									"    return numero;\r",
+									"  } else {\r",
+									"    gerarNumero();\r",
+									"  }\r",
+									"}\r",
+									"\r",
+									"function country() {\r",
+									"\r",
+									"    var country = [\"África do Sul\",\"Angola\",\"Argélia\",\"Benim\",\"Botsuana\",\"Burquina Faso\",\"Burúndi\", \"Cabo Verde\",\"Camarões\",\"Chade\",\"Comores\",\"Congo-Brazzaville\",\"Costa do Marfim\",\"Egito\",\"Eritreia\",\"Essuatíni\",\"Etiópia\",\"Gabão\",\"Gâmbia\",\"Gana\",\"Guiné\",\"Guiné Equatorial\",\"Guiné-Bissau\",\"Jibuti\",\"Lesoto\",\"Libéria\",\"Líbia\",\"Madagáscar\",\"Maláui\",\"Marrocos\",\"Maurícia\",\"Mauritânia\",\"Moçambique\",\"Namíbia\",\"Níger\",\"Nigéria\",\"Quénia\",\"República Centro-Africana\",\"República Democrática do Congo\",\"Ruanda\",\"São Tomé e Príncipe\",\"Seicheles\",\"Senegal\",\"SerraLeoa\",\"Somália\",\"Sudão\",\"Sudão do Sul\",\"Tanzânia\",\"TogTunísia\",\"Uganda\",\"Zâmbia\",\"Zimbábue\",\"Antiga e Barbuda\",\"Argentina\",\"Bahamas\",\"Barbados\",\"Belize\",\"Bolívia\",\"Brasil\",\"Canadá\",\"Chile\",\"Colômbia\",\"Costa Rica\",\"Cuba\",\"Dominica\",\"Uruguai\",\"Venezuela\",\"Afeganistão\",\"China\",\"Coreia do Norte\",\"Índia\",\"Indonésia\",\"Irão\",\"Iraque\",\"Israel\",\"Japão\",\"Jordânia\",\"França\",\"Grécia\",\"Hungria\",\"Roménia\",\"Rússia\",\"Suíça\",\"Austrália\",];\r",
+									"\r",
+									"    var randomItem = country[Math.floor(Math.random() * country.length)];\r",
+									"    \r",
+									"    return randomItem; \r",
+									"}\r",
+									"    \r",
+									"pm.environment.set(\"Country\", country());\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"corporateName\": \"{{CorporateName}}\",\r\n    \"responsibleContact\": \"{{FullName}}\",\r\n    \"mail\": \"{{Mail}}\",\r\n    \"cnpj\": {{IDCorporate}},\r\n    \"serviceDescription\": \"{{ServiceDescription}}\",\r\n    \"telephone\":{{Phone}},\r\n    \"address\": [\r\n        {\r\n            \"country\": \"{{Country}}\",\r\n            \"zipCode\": \"{{ZipCode}}\",\r\n            \"city\": \"{{City}}\",\r\n            \"state\": \"{{Uf}}\",\r\n            \"district\": \"{{District}}\",\r\n            \"street\": \"{{Street}}\",\r\n            \"number\": \"{{AddressNumber}}\",\r\n            \"complement\": \"Não tem\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/suppliers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"suppliers"
+							]
+						}
+					},
+					"response": []
+				},
 				{
-					"Status code is 200": true
-				}
-			]
-		},
-		{
-			"id": "cbd15440-8c92-4bd1-9e8b-7fc704c2f51d",
-			"name": "Create-Supplier",
-			"url": "https://develop.qacoders-academy.com.br/api/suppliers?token=AUTH_VALUE",
-			"time": 76,
-			"responseCode": {
-				"code": 201,
-				"name": "Created"
-			},
-			"tests": {
-				"check cadastro com sucesso is true": true,
-				"Status code is 201": true,
-				"check CorporateName is true": true,
-				"Check is FullName is True": true,
-				"Check is Mail is True": true,
-				"Check is IDCorporate is True": true,
-				"Check is ServiceDescription is True": true,
-				"Check is Phone is True": true,
-				"Check is Country is True": true,
-				"Check is ZipCode is True": true,
-				"Check is City is True": true,
-				"Check is Uf is True": true,
-				"Check is District is True": true,
-				"Check is Street is True": true,
-				"Check is AddressNumber is True": true
-			},
-			"testPassFailCounts": {
-				"check cadastro com sucesso is true": {
-					"pass": 1,
-					"fail": 0
+					"name": "Supplier empty",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function corporateName() {\r",
+									"\r",
+									"    var corporateName = [\"Onda Cerebral Máxima\",\"Criativo Sparx Brilhante\",\"Design Criativo\",\"ZenithWorks\",\"SevenBlue\", \"BlueiNova\",\"Byte & Construtores\",\"Rocket brasil\",\"Think\", \"Ignite Vendas\",\"Master\",\"Criare Inovation\",\"CodeVerse\", \"TechNova\",\"NexaByte\",\"NexusTech\",\"SkyTech\",\"BlueWave Tech\", \"QuantumShift\",\"TechIgnite\",\"TechnoForge\",\"DynaTech\", \"ProximTech\",\"CoreVortex\",\"IdeiaLab\",\"StartupLab\", \"EmpreendaJá\",\"Incore Startup\",\"VisionLab\",\"InovaLab\", \"Criative e Lab\",\"Growth Action\",\"TechLab Sim\",\"NegócioLab\", \"Solução Prod Lab\",\"EmpreendedorLab\",\"Eight FuturoLab\", \"FintecLab\",\"Forge Fintec\",\"InvestTop\",\"Right Digital Finanças\",\"Tech Invest\",\"Invest Fintec Premium\",\"Blitz Fintec\",\"Finantec 180\",\"Invest Seguro Fintec\",\"Fintec Digital Wealth\",\"Barão Money Brasil\",\"Lobo Fintec\"];\r",
+									"     \r",
+									"    var randomItem = corporateName[Math.floor(Math.random() * corporateName.length)];\r",
+									"    \r",
+									"    return randomItem; \r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"CorporateName\", corporateName());\r",
+									"// pm.environment.set(\"CorporateName\", pm.variables.replaceIn('{{$randomCorporateName}}'));\r",
+									"\r",
+									"function firstName() {\r",
+									"\r",
+									"        var firstName = [\"Miguel\",\"Sophia\",\"Davi\",\"Alice\",\"Arthur\",\"Julia\",\"Pedro\",\"Isabella\",\"Gabriel\",\"Manuela\",\"Bernardo\",\"Laura\",\"Lucas\",\"Flávia\",\"Luiza\",\"Matheus\",\"Noah\", \"Valentina\",\"Rafael\",\"Giovanna\",\"Heitor\",\"Enzo\",\"Helena\",\"Guilherme\",\"Beatriz\",\"Nicolas\",\"Leticia\",\"Lorenzo\",\"Lara\",\"Gustavo\",\"Mariana\",\"Felipe\",\"Nicole\",\"Samuel\",\"Joice\", \"Dener\",\"Rafaela\",\"Augusto\",\"Heloísa\",\"Daniel\",\"Isadora\",\"Vitor\",\"Lívia\",\"Leonardo\",\"Henrique\",\"Juliana\",\"Theo\",\"Lorena\",\"Murilo\",\"Gabriela\",\"Eduardo\",\"Yasmin\",\"Pedro\", \"Henriqueta\",\"Isabelly\",\"Pietro\",\"Sarah\",\"Kauã\",\"Jaqueline\",\"Isaac\",\"Letícia\",\"Caio\",\"Mariele\",\"Vinicius\",\"Melissa\",\"Benjamin\",\"Marina\",\"João\",\"Clara\",\"Lucca\",\"Cecília\",\"Miguel\",\"Esther\",\"Bryan\",\"Emanuelly\",\"Joaquim\",\"Rebeca\",\"Victor\",\"Bella\",\"Thiago\",\"Lavínia\",\"Antônio\",\"Vitória\",\"Mario\",\"Bianca\",\"Francisco\",\"Catarina\",\"Ronaldo\",\"Larissa\",\"Bruno\",\"Margarida\",\"Emanuel\",\"Fernanda\",\"Marcos\",\"Amanda\",\"Ian\",\"Alícia\",\"Luiz\",\"Carolina\",\"Rodrigo\",\"Agatha\",\"Otávio\",\"Gabrielly\"];\r",
+									"\r",
+									"        var randomItem = firstName[Math.floor(Math.random() * firstName.length)];\r",
+									"    \r",
+									"    return randomItem; \r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"FirstName\", firstName());\r",
+									"\r",
+									"function lastName() {\r",
+									"\r",
+									"    var lastName = [\"Alves da Silva\", \"Andrade Barbosa\", \"Barbosa Oliveira\", \"Oliveira da Silva\", \"Alves Pereira\", \"Conceição Barbosa\", \"Allen Young\", \"Hernandez King\", \"Wright Lopez\", \"Hill Scott\", \"Green Adams\", \"Conceição da Costa\", \"da Costa Oliveira\", \"Rodrigues de Oliveira\", \"Amaral Neto de Souza\", \"Pereira da Conceição\", \"Barros Neto de Andrade\", \"Borges de Andrade Pereira da Silva\", \"Batista Campos do Amaral\", \"Cardoso de Oliveira\", \"Pontes Guimarães\", \"Dias de Jesus\", \"Barbos de Lima\", \"Gonçalves da Silva\", \"Gonsalves de Lima\", \"Pereira de Oliveira Batista\", \"Dias de Freitas\", \"Ferreira\", \"Garcia da Paixão\", \"Lima Lopes\", \"Jesus da Silva\", \"da Silva de Lima\", \"da Silva Gonsalves Texeira\", \"Fernandes de Paula\", \"de Paula da Silva\", \"Barbosa de Mello Oliveira\", \"Oliveira Neto Conceição da Paixão\"];\r",
+									"\r",
+									"    var randomItem = lastName[Math.floor(Math.random() * lastName.length)];\r",
+									"    \r",
+									"    return randomItem; \r",
+									"}\r",
+									"    \r",
+									"pm.environment.set(\"LastName\", lastName());\r",
+									"\r",
+									"pm.environment.set(\"FullName\", pm.variables.get(\"FirstName\") + \" \" + pm.variables.get(\"LastName\"));\r",
+									"\r",
+									"function emailProvider() {\r",
+									"\r",
+									"    var emailProvider = [\"@hotmail.com\", \"@gmail.com\", \"@gmail.com.br\", \"@yahoo.com.br\", \"@terra.com.br\", \"@outlook.com\", \"@live.com\", \"@icloud.com\"];\r",
+									"\r",
+									"    var randomItem = emailProvider[Math.floor(Math.random() * emailProvider.length)];\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"EmailProvider\", emailProvider());\r",
+									"\r",
+									"pm.environment.set(\"Mail\", pm.variables.replaceIn('{{$guid}}') + \"_empresafake\" + pm.environment.get(\"EmailProvider\"));\r",
+									"\r",
+									"pm.environment.set(\"'\"+\"AddressNumber\"+\"'\", Math.floor(Math.random() * 10000));\r",
+									"\r",
+									"\r",
+									"function generateRandomCNPJ() {\r",
+									"    var n = 9; // 9 primeiros dígitos\r",
+									"    var n1 = getRandomInt(0, n);\r",
+									"    var n2 = getRandomInt(0, n);\r",
+									"    var n3 = getRandomInt(0, n);\r",
+									"    var n4 = getRandomInt(0, n);\r",
+									"    var n5 = getRandomInt(0, n);\r",
+									"    var n6 = getRandomInt(0, n);\r",
+									"    var n7 = getRandomInt(0, n);\r",
+									"    var n8 = getRandomInt(0, n);\r",
+									"    var n9 = 0; // O nono dígito é sempre 0\r",
+									"    var n10 = 0; // O décimo dígito é sempre 0\r",
+									"    var n11 = getRandomInt(0, n);\r",
+									"    var n12 = getRandomInt(0, n);\r",
+									"\r",
+									"    var d1 = n12 * 2 + n11 * 3 + n9 * 4 + n8 * 5 + n7 * 6 + n6 * 7 + n5 * 8 + n4 * 9 + n3 * 2 + n2 * 3 + n1 * 4;\r",
+									"    d1 = 11 - (d1 % 11);\r",
+									"    d1 = d1 >= 10 ? 0 : d1;\r",
+									"\r",
+									"    var d2 = d1 * 2 + n12 * 3 + n11 * 4 + n9 * 5 + n8 * 6 + n7 * 7 + n6 * 8 + n5 * 9 + n4 * 2 + n3 * 3 + n2 * 4 + n1 * 5;\r",
+									"    d2 = 11 - (d2 % 11);\r",
+									"    d2 = d2 >= 10 ? 0 : d2;\r",
+									"\r",
+									"    return `${n1}${n2}${n3}${n4}${n5}${n6}${n7}${n8}${n9}${n10}${n11}${n12}${d1}${d2}`;\r",
+									"}\r",
+									"\r",
+									"function getRandomInt(min, max) {\r",
+									"    return Math.floor(Math.random() * (max - min + 1)) + min;\r",
+									"}\r",
+									" \r",
+									"pm.environment.set(\"IDCorporate\",generateRandomCNPJ());\r",
+									"\r",
+									"\r",
+									"function serviceDescription() {\r",
+									"\r",
+									"    var serviceDescription = [\"Assessoria Contabil\",\"Analise Financeira\",\"Controle de Custos\",\"Gestão Folha de Pagamento\",\"Planejamento Tributario\",\"Suporte Tecnico\",\"Alguel de Maquinas\",\"Configuração de Redes\",\"Instalação de Software\",\"Informatica Basico\"];\r",
+									"\r",
+									"    var randomItem = serviceDescription[Math.floor(Math.random() * serviceDescription.length)];\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"ServiceDescription\",serviceDescription());\r",
+									"\r",
+									"\r",
+									"function phonenumber() {\r",
+									"\r",
+									"    var phonenumber = [981718551,986598149,999620167,981861718,973714954,994891686,994784952,971625825,985140652,987413824,987781142,984188003,999821321,993430652,993045548,967274357,992232553,974150681,996339359,998635153,995849584,983842883,982269573,967526971,968115645,986324175,980385840,991288109,976384812,997351513,982583888,980369422,993503986,971677223,987517526,932463287,982667642,983469266,983834520,928307244,934350014,925534867,937577682,939785785,982689768,982867532,929103677,993691882,938735351,982281327,998258412,987741123,998616841,969589739,979067875,982184334,976394096,991234321,998258412, 987741123, 998616841, 969589739, 979067875, 982184334, 976394096, 991234321, 981257546, 982632630, 992626653, 988358123, 995675745, 991087267, 996552241, 973458395, 993529733, 981657207, 980550207, 997571464, 987028232, 969557496, 985128115, 995283334, 996327279, 986204821, 995313152, 980632187, 993661853, 974338237, 985117245, 992213414, 996784882, 988157645, 976869654, 997752956, 987536854, 972447079, 974956642, 969822121, 967707683, 971781421, 997361833, 983332805, 979558299, 980555328, 979312516, 992168724, 994301288, 967775760];\r",
+									"\r",
+									"    var randomItem = phonenumber[Math.floor(Math.random() * phonenumber.length)];\r",
+									"\r",
+									"    return randomItem\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"AreaCode\", Math.floor(Math.random() * 99)+10);\r",
+									"\r",
+									"pm.environment.set(\"Phone\",\"55\"+ pm.environment.get(\"AreaCode\") + '' + phonenumber());\r",
+									"\r",
+									"\r",
+									"function emailProvider() {\r",
+									"\r",
+									"    var emailProvider = [\"@hotmail.com\", \"@gmail.com\", \"@gmail.com.br\", \"@yahoo.com.br\", \"@terra.com.br\", \"@outlook.com\", \"@live.com\", \"@icloud.com\"];\r",
+									"\r",
+									"    var randomItem = emailProvider[Math.floor(Math.random() * emailProvider.length)];\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"Mail\", emailProvider());  \r",
+									"\r",
+									"pm.environment.set(\"Mail\", pm.variables.replaceIn('{{$guid}}') + \"_empresafake\" + pm.environment.get(\"EmailProvider\"));\r",
+									"\r",
+									"function zipCode() {\r",
+									"\r",
+									"    var zipCode = [\"02077045\",\"13458580\",\"03015017\",\"05892387\",\"08452252\",\"04877265\",\"08320685\",\"04182125\",\"02987265\",\"08240174\",\"04405185\",\"88058115\",\"88020230\",\"88020231\",\"88090561\",\"88066405\",\"88058256\",\"88040445\",\"88048418\",\"88066420\",\"88066407\",\"52031216\",\"50920825\",\"50810065\",\"52090168\",\"52160231\",\"52121032\",\"50790140\",\"51310540\",\"52190480\",\"50610631\",\"41321205\",\"41320210\",\"41321240\",\"41321830\",\"41321835\",\"41321841\",\"41231085\",\"41342565\",\"41205560\",\"41370075\",\"23545037\",\"23548007\",\"23595180\",\"23580420\",\"23555240\",\"23587545\",\"23548013\",\"23555306\",\"23580430\",\"23548163\",\"30672772\",\"31744620\",\"30666482\",\"30640438\",\"30668176\",\"31846022\",\"31540083\",\"30518321\",\"30451535\",\"31741051\",\"69036662\",\"69036664\",\"69030418\",\"69036666\",\"69015754\",\"69075763\",\"69053770\",\"69008410\",\"69020083\",\"69065016\",\"74959198\",\"74988833\",\"74786610\",\"74786640\",\"74786612\",\"74786642\",\"74786614\",\"74786644\",\"74786616\",\"74786646\",\"64090451\",\"64018375\",\"64013450\",\"64023110\",\"64033512\",\"64039650\",\"64033588\",\"64013451\",\"64018380\",\"64090452\",\"29033302\",\"29047058\",\"29024043\",\"29033350\",\"29032785\",\"29032030\",\"29024040\",\"29023047\",\"29033395\",\"29024060\"];\r",
+									"\r",
+									"    var randomItem = zipCode[Math.floor(Math.random() * zipCode.length)];\r",
+									"    \r",
+									"    return randomItem; \r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"ZipCode\", zipCode());\r",
+									"\r",
+									"function city() {    \r",
+									"     \r",
+									"     var city = [\"São Paulo\", \"Belo Horizonte\",\"Assaí\",\"Londrina\",\"Rio de Janeiro\",\"Sobral\",\"Jataí\",\"Gramado\",\"Campo Grande\",\"Rio Grande\",\"São Mateus\", \"Jundiaí\",\"Curitiba\",\"Suvitiba\",\"Nova Iguaçu\",\"Votorantim\",\"Araguaia\",\"Itaboraí\",\"Araras\", \"Abadia de Goiás\",\"Amorinópolis\",\"Águas Lindas de Goiás\",\"Calixtolândia\",\"Goianésia\",\"Caucaia\",\"Tabuba\",\"Juazeiro do Norte\", \"Travessa Mauá\",\"Manaus\",\"Novo Hamburgo\", \"Canoas\",\"Porto Alegre\",\"Uruguaiana\",\"Brasília\",\"Santa Cruz do Sul\",\"Franca\",\"Caraguatatuba\",\"Ponte Nova\",\"Araçatuba\",\"Santa Maria\",\"Campos dos Goytacazes\", \"Anápolis\",\"Paraíso de Goiás\",\"Itaipu\", \"Maricá\",\"Petrópolis\",\"São Luís\",\"Rolândia\", \"Cuiabá\",\"Maringá\",\"Salvador\",\"São Bernardo\",\"Praia Grande\",\"Americana\",\"Betim\", \"Magé\", \"Itaquaquecetuba\",\"Adrianópolis\",\"Fortaleza\",\"Iguatu\",\"Itapecerica da Serra\",\"Campinas\",\"Tefé\",\"São Gonçalo\",\"Barra Mansa\",\"Anhangüera\",\"Imperatriz\",\"Sinop\",\"Cascavel\",\"Juazeiro\",\"Coroadinho\",\"Bonfim\",\"Itabuna\",\"Foz do Iguaçu\",\"Novo Horizonte\",\"Juiz de Fora\",\"Barreiras\",\"Goiânia\",\"Camaçari\",\"Alto da Cruz\",\"Sete Lagoas\",\"Itambé\",\"Matão\",\"Juazeiro\",\"Jerusalém\",\"Araçatiba\",\"Recife\"];\r",
+									"\r",
+									"    var randomItem = city [Math.floor(Math.random() * city.length)];        return randomItem; } \r",
+									"\r",
+									"pm.environment.set(\"City\",city());\r",
+									"\r",
+									"function state() {    var state = [\"RR\",\"AC\",\"AM\",\"RO\",\"PA\",\"AP\",\"TO\",\"MA\",\"PI\",\"CE\",\"RN\",\"PB\",\"PE\",\"AL\",\"SE\",\"BA\",\"MG\",\"ES\",\"RJ\",\"SP\",\"PR\",\"SC\",\"RS\",\"MS\",\"MT\",\"GO\",\"DF\"];\r",
+									"\r",
+									"    var randomItem = state[Math.floor(Math.random() * state.length)];        return randomItem; } \r",
+									"\r",
+									"pm.environment.set(\"Uf\",state());\r",
+									"\r",
+									"function neighbourhood() {    var neighbourhood = [\"República\",\"Boa Viagem\",\"Cidade São Mateus\",\"Vila Gomes Cardim\",\"Cidade São Mateus\",\"Warta\",\"Centro\",\"Vila Jardim Rio Claro\",\"Zona Portuária\",\"Guriri Norte\",\"São Mateus\",\"Forte Rio Branco\",\"Lá Imprensa\",\"São João\",\"Vila Joana\",\"Carlos Augusto Cornelsen\",\"Bom Retiro\",\"Ponta Negra\",\"Suritiba Mendes\",\"Setor Sul\",\"Jardim América V\",\"América\",\"Jardim Alterosa\",\"Mansões Village\",\"Itamaraty\",\"4ª Etapa\",\"De Godoy\",\"Belchior\",\"Vila Jorge\",\"Setor Santa Bárbara\",\"Mansões Samurai\",\"Avenida Goiás 123\",\"Lindas de Goiás\",\"Mundo\",\"Interlagos\",\"Antônio Guerra\",\"Vila Pavão 21\",\"Cristiano sá Olsen\",\"Areal\",\"Setor de Habitações\",\"Individuais Norte\",\"Sobradinho\",\"Brasília\",\"Asa Sul\",\"Setor IV\",\"Goiânia 2\",\"Alípio Mendes\",\"Santa Maria\", \"Setor Gerais\",\"Samurai\",\"Dezenove\",\"José Antônio\",\"Guerra Peixe\",\"Guará\",\"Alto da Serra\",\"Itaipu 12\",\"Parque da Barragem\", \"Área Especial D\",\"São Jorge\",\"Aragua\", \"Anhanguera A\",\"Água Clara\",\"Vila Goiás\", \"Gomes de Paula\",\"Macabeus 586\",\"Vila São Jorge\",\"Chácaras Ana Maria\",\"Jardim Sumaré\", \"Duque\",\"Projetada J\",\"Araçatuba\",\"Candangolândia\",\"Brasílinha\",\"QE 11\",\"Especial C\",\"Alípio Texeira\",\"Gama Oeste\", \"Truman\",\"Sobradinho2\",\"Novo Mundo III\", \"Linda Da Vitória\",\"Águas de Goiás\",\"Monte Castelo\",\"José Gomes\",\"D. Paula\"\r",
+									"];\r",
+									"\r",
+									"    var randomItem = neighbourhood[Math.floor(Math.random() * neighbourhood.length)];  \r",
+									"\r",
+									"      return randomItem; } \r",
+									"\r",
+									"pm.environment.set(\"District\",neighbourhood());\r",
+									"\r",
+									"function street() {   \r",
+									"    \r",
+									"     var street = [\"Praça da República\",\"Avenida Afonso Pena\",\"Maria Luísa do Val Penteado\",\"Serra de Bragança\",\"Avenida Rio Branco\",\"Vila Joana 12\",\"JCA 29\",\"SCRN 702/703 Bloco H\",\"Guará II\",\"Domingos Olímpio\",\"Avenida Tocantins\",\"Da Imprensa\",\"Almirante Maximiano Fonseca\",\"Centro\",\"Monte Castelo\",\"Nova Cruz\",\"Avenida Esbertalina Barbosa Damiani\",\"Guriri Norte\",\"São Mateus\",\"Pontes Suvitiba\",\"Barragem Setor 12\",\"Carlos Augusto Cornelsen\",\"Bom Retiro\",\"QS 5 Rua 300\",\"Asa Norte\",\"Comércio Local 13\",\"Vila Pavão 3\",\"Cristiano Olsen\",\"Jardim Sumaré\",\"QE 11 Área Especial C\",\"Águas Lindas\",\"Quadra 1 Lote 9\",\"Setor Bárbara\",\"Rua 31 404\",\"Jardim Caravelas\",\"Avenida Goiás 238\",\"Júpiter\",\"Rua SR 42\",\"Águas Claras\",\" Novo Mundo Truman\",\"SHIN QI 3 Conjunto 1\",\"Areal 02\",\"Guará I\",\"QR 307 Conjunto V\",\"Quadra SQS 413 Bloco P\",\"RI 40\",\"QR 1-A Conjunto C\",\"Brasília Leste\",\"CL 310 Bloco C\",\"Itamaraty\",\"Setor Recanto\",\"Área Especial C\",\"Santos Dumont\",\"Macabeus\",\"Recanto das Minas\",\"Vila Goiás 5\",\"Das Araras 12\",\"Jardim Bumaré\",\"QE 11\",\"Paraíso de Goiás 3\",\"de Godoy 281\",\"4ª Etapa\",\"Boa Vitória\",\"Rua Cristiano de Olsen 1\"];\r",
+									"\r",
+									"    var randomItem = street[Math.floor(Math.random() * street.length)];        return randomItem; } \r",
+									"\r",
+									"pm.environment.set(\"Street\",street());\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"AddressNumber\", Math.floor(Math.random() * 10000));\r",
+									"\r",
+									"let numerosTelefone = [];\r",
+									"pm.environment.get(\"variable_key\");\r",
+									"pm.environment.get(\"variable_key\");\r",
+									"pm.environment.get(\"variable_key\");\r",
+									"pm.environment.get(\"variable_key\");\r",
+									"\r",
+									"function gerarNumero() {\r",
+									"  let numero = Math.floor(Math.random() * 9999999999);\r",
+									"  if (!numerosTelefone.includes(numero)) {\r",
+									"    numerosTelefone.push(numero);\r",
+									"    return numero;\r",
+									"  } else {\r",
+									"    gerarNumero();\r",
+									"  }\r",
+									"}\r",
+									"\r",
+									"function country() {\r",
+									"\r",
+									"    var country = [\"África do Sul\",\"Angola\",\"Argélia\",\"Benim\",\"Botsuana\",\"Burquina Faso\",\"Burúndi\", \"Cabo Verde\",\"Camarões\",\"Chade\",\"Comores\",\"Congo-Brazzaville\",\"Costa do Marfim\",\"Egito\",\"Eritreia\",\"Essuatíni\",\"Etiópia\",\"Gabão\",\"Gâmbia\",\"Gana\",\"Guiné\",\"Guiné Equatorial\",\"Guiné-Bissau\",\"Jibuti\",\"Lesoto\",\"Libéria\",\"Líbia\",\"Madagáscar\",\"Maláui\",\"Marrocos\",\"Maurícia\",\"Mauritânia\",\"Moçambique\",\"Namíbia\",\"Níger\",\"Nigéria\",\"Quénia\",\"República Centro-Africana\",\"República Democrática do Congo\",\"Ruanda\",\"São Tomé e Príncipe\",\"Seicheles\",\"Senegal\",\"SerraLeoa\",\"Somália\",\"Sudão\",\"Sudão do Sul\",\"Tanzânia\",\"TogTunísia\",\"Uganda\",\"Zâmbia\",\"Zimbábue\",\"Antiga e Barbuda\",\"Argentina\",\"Bahamas\",\"Barbados\",\"Belize\",\"Bolívia\",\"Brasil\",\"Canadá\",\"Chile\",\"Colômbia\",\"Costa Rica\",\"Cuba\",\"Dominica\",\"Uruguai\",\"Venezuela\",\"Afeganistão\",\"China\",\"Coreia do Norte\",\"Índia\",\"Indonésia\",\"Irão\",\"Iraque\",\"Israel\",\"Japão\",\"Jordânia\",\"França\",\"Grécia\",\"Hungria\",\"Roménia\",\"Rússia\",\"Suíça\",\"Austrália\",];\r",
+									"\r",
+									"    var randomItem = country[Math.floor(Math.random() * country.length)];\r",
+									"    \r",
+									"    return randomItem; \r",
+									"}\r",
+									"    \r",
+									"pm.environment.set(\"Country\", country());\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"corporateName\": \"\",\r\n    \"cnpj\": \"\",\r\n    \"responsibleContact\": \"\",\r\n    \"mail\": \"\",\r\n    \"telephone\": \"\",\r\n    \"serviceDescription\": \"\",\r\n    \"status\": \"\",\r\n    \"address\": [\r\n        {\r\n            \"country\": \"\",\r\n            \"zipCode\": \"\",\r\n            \"city\": \"\",\r\n            \"state\": \"\",\r\n            \"district\": \"\",\r\n            \"street\": \"\",\r\n            \"number\": \"\",\r\n            \"complement\": \"\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/suppliers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"suppliers"
+							]
+						}
+					},
+					"response": []
 				},
-				"Status code is 201": {
-					"pass": 1,
-					"fail": 0
-				},
-				"check CorporateName is true": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Check is FullName is True": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Check is Mail is True": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Check is IDCorporate is True": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Check is ServiceDescription is True": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Check is Phone is True": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Check is Country is True": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Check is ZipCode is True": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Check is City is True": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Check is Uf is True": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Check is District is True": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Check is Street is True": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Check is AddressNumber is True": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				76
-			],
-			"allTests": [
 				{
-					"check cadastro com sucesso is true": true,
-					"Status code is 201": true,
-					"check CorporateName is true": true,
-					"Check is FullName is True": true,
-					"Check is Mail is True": true,
-					"Check is IDCorporate is True": true,
-					"Check is ServiceDescription is True": true,
-					"Check is Phone is True": true,
-					"Check is Country is True": true,
-					"Check is ZipCode is True": true,
-					"Check is City is True": true,
-					"Check is Uf is True": true,
-					"Check is District is True": true,
-					"Check is Street is True": true,
-					"Check is AddressNumber is True": true
-				}
-			]
-		},
-		{
-			"id": "42c1437b-45f5-45a7-8c4e-086b40c75b20",
-			"name": "Supplier empty",
-			"url": "https://develop.qacoders-academy.com.br/api/suppliers",
-			"time": 33,
-			"responseCode": {
-				"code": 400,
-				"name": "Bad Request"
-			},
-			"tests": {
-				"Status code is 400": true
-			},
-			"testPassFailCounts": {
-				"Status code is 400": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				33
-			],
-			"allTests": [
+					"name": "Show-Supplier",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/suppliers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"suppliers"
+							]
+						}
+					},
+					"response": []
+				},
 				{
-					"Status code is 400": true
-				}
-			]
-		},
-		{
-			"id": "c7bf4134-388b-427b-9700-b61b725a2de5",
-			"name": "Show-Supplier",
-			"url": "https://develop.qacoders-academy.com.br/api/suppliers?token=AUTH_VALUE",
-			"time": 971,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Status code is 200": true
-			},
-			"testPassFailCounts": {
-				"Status code is 200": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				971
-			],
-			"allTests": [
+					"name": "Index-Supplier",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/suppliers/{{idSupplier}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"suppliers",
+								"{{idSupplier}}"
+							]
+						}
+					},
+					"response": []
+				},
 				{
-					"Status code is 200": true
-				}
-			]
-		},
-		{
-			"id": "8907d885-dfee-4692-ac78-13a93b7b8f5d",
-			"name": "Index-Supplier",
-			"url": "https://develop.qacoders-academy.com.br/api/suppliers/64fbaae61acfc7838b3f3121?token=AUTH_VALUE",
-			"time": 37,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Status code is 200": true
-			},
-			"testPassFailCounts": {
-				"Status code is 200": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				37
-			],
-			"allTests": [
-				{
-					"Status code is 200": true
-				}
-			]
-		},
-		{
-			"id": "4ab9d02a-1c21-4262-aac3-8e6f8e77ed78",
-			"name": "Count-Supplier",
-			"url": "https://develop.qacoders-academy.com.br/api/suppliers/count?token=AUTH_VALUE",
-			"time": 37,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Status code is 200": true
-			},
-			"testPassFailCounts": {
-				"Status code is 200": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				37
-			],
-			"allTests": [
-				{
-					"Status code is 200": true
+					"name": "Count-Supplier",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/suppliers/count",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"suppliers",
+								"count"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
 	],
-	"count": 1,
-	"totalTime": 1487,
-	"collection": {
-		"requests": [
-			{
-				"id": "7c30d773-e95e-4113-8bff-3bc25d20414d",
-				"method": "POST"
-			},
-			{
-				"id": "2ea4385e-7c93-410c-a130-613206f28a22",
-				"method": "POST"
-			},
-			{
-				"id": "dae77a32-1f36-4fe5-b6ec-51d0e39efe16",
-				"method": "POST"
-			},
-			{
-				"id": "cbd15440-8c92-4bd1-9e8b-7fc704c2f51d",
-				"method": "POST"
-			},
-			{
-				"id": "42c1437b-45f5-45a7-8c4e-086b40c75b20",
-				"method": "POST"
-			},
-			{
-				"id": "c7bf4134-388b-427b-9700-b61b725a2de5",
-				"method": "GET"
-			},
-			{
-				"id": "8907d885-dfee-4692-ac78-13a93b7b8f5d",
-				"method": "GET"
-			},
-			{
-				"id": "4ab9d02a-1c21-4262-aac3-8e6f8e77ed78",
-				"method": "GET"
-			}
-		]
-	}
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://develop.qacoders-academy.com.br/status"
+		}
+	]
 }
